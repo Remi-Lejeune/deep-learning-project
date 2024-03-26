@@ -23,7 +23,11 @@ cd lcpfn
 ```bash
 pip install -r requirements.txt
 ```
-
+4. Extract checkpoints in lcpfn/trained_models and make sure their names are the following:
+```
+pfn_EPOCH1000_EMSIZE512_NLAYERS6_NBUCKETS1000.pt
+pfn_EPOCH1000_EMSIZE512_NLAYERS12_NBUCKETS1000.pt
+```
 ### Usage
 
 For examples of training an LC-PFN model and using it for inference, check out the `notebooks` directory.
