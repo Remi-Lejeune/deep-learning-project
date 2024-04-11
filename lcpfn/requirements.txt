@@ -1,7 +1,0 @@
-torch==1.11.0
-numpy>=1.21.2
-jupyter
-numpy
-pandas
-scikit-learn
-matplotlib
