@@ -405,3 +405,12 @@ These are the 20 supported learners (all of them executed with standard parametr
 * 42732 (sf-police-incidents)
 * 42733 (Click_prediction_small)
 * 42734 (okcupid-stem)
+
+## Important:
+
+LCDB uses a requirement called OpenML. If you get an error after doing ```import lcdb```, you might have to change permissions on your ```.config``` folder:
+
+```shell
+sudo chown -R <your_username>:<your_username> $HOME/.config
+sudo chmod u+w $HOME/.config
+```
