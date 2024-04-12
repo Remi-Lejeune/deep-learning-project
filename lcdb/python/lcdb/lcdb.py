@@ -599,7 +599,7 @@ def get_openmlid_from_descriptor(dataset):
     elif type(dataset) == int:
         return dataset
     else:
-        raise ValuerError(f"Unsupported datatype {type(dataset)} for first positional argument.")
+        raise ValueError(f"Unsupported datatype {type(dataset)} for first positional argument.")
 
 def get_curve_as_dataframe(dataset, learner, metric = "accuracy"):
     openmlid = get_openmlid_from_descriptor(dataset)
