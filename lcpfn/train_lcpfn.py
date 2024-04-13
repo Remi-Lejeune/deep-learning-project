@@ -41,7 +41,7 @@ def train_lcpfn(
     num_features = 1 #LALA
 
     ys = get_batch_func(
-        1, #HELLA HARDCODED
+        10_000,#HELLA
         seq_len,
         num_features,
         hyperparameters=hps,
