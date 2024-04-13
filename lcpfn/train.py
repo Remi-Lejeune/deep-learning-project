@@ -242,8 +242,8 @@ def train(
                         )
                     else:
                         losses = criterion(output, targets)
-                    print(output.flatten())
-                    print(targets.flatten())
+                    print(output)
+                    print(targets)
                     print(losses)
                     print(losses.shape)
                     print(output.shape)
