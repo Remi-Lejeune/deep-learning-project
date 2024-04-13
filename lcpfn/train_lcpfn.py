@@ -41,28 +41,30 @@ def train_lcpfn(
     num_features = 1 #LALA
 
     ys = get_batch_func(
-        10_000,#HELLA
+        1,
+        # 10_000,
         seq_len,
         num_features,
         hyperparameters=hps,
         single_eval_pos=seq_len,
     )
     #print(ys)
-    print('nb', num_borders)
-    print('ys', ys[2])
-    bucket_limits = bar_distribution.get_bucket_limits(num_borders, ys=ys[2])
+    # print('nb', num_borders)
+    # print('ys', ys[2])
+    # bucket_limits = bar_distribution.get_bucket_limits(num_borders, ys=ys[2])
 
     # Discretization of the predictive distributions
-    criterions = {
-        num_features: {
-            num_borders: bar_distribution.FullSupportBarDistribution(bucket_limits)
-        }
-    }
+    # criterions = {
+    #     num_features: {
+    #         num_borders: bar_distribution.FullSupportBarDistribution(bucket_limits)
+    #     }
+    # }
 
     config = dict(
         nlayers=nlayers,
         priordataloader_class=dataloader,
-        criterion=criterions[num_features][num_borders],
+        criterion=nn.MSELoss,
+        # criterion=criterions[num_features][num_borders],
         encoder_generator=lambda in_dim, out_dim: nn.Sequential(
             encoders.Normalize(0.0, 101.0),
             encoders.Normalize(0.5, math.sqrt(1 / 12)),
