@@ -40,14 +40,14 @@ def train_lcpfn(
 
     num_features = 1 #LALA
 
-    ys = get_batch_func(
-        4,
-        # 10_000,
-        seq_len,
-        num_features,
-        hyperparameters=hps,
-        single_eval_pos=seq_len,
-    )
+    # ys = get_batch_func(
+    #     4,
+    #     # 10_000,
+    #     seq_len,
+    #     num_features,
+    #     hyperparameters=hps,
+    #     single_eval_pos=seq_len,
+    # )
     #print(ys)
     # print('nb', num_borders)
     # print('ys', ys[2])
