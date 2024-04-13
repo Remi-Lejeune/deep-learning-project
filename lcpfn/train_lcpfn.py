@@ -47,7 +47,7 @@ def train_lcpfn(
         hyperparameters=hps,
         single_eval_pos=seq_len,
     )
-
+    #print(ys)
     bucket_limits = bar_distribution.get_bucket_limits(num_borders, ys=ys[2])
 
     # Discretization of the predictive distributions

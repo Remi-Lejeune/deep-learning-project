@@ -220,13 +220,18 @@ def get_bucket_limits(
     if ys is not None:
         ys = ys.flatten()
         ys = ys[~torch.isnan(ys)]
+        
+        #TODO
+        #THIS LINE IS CAUSING ISSUES ITS TRUNCATING THE INPUT BASED ON THE NUMBER OF OUTPUTS
         if len(ys) % num_outputs:
             ys = ys[: -(len(ys) % num_outputs)]
+        # print(ys)
         print(
             f"Using {len(ys)} y evals to estimate {num_outputs} buckets. Cut off the last {len(ys) % num_outputs} ys."
         )
         ys_per_bucket = len(ys) // num_outputs
         if full_range is None:
+            #print(ys) #DEBUG ADDITION
             full_range = (ys.min(), ys.max())
         else:
             assert (
