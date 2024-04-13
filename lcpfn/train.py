@@ -242,6 +242,11 @@ def train(
                         )
                     else:
                         losses = criterion(output, targets)
+                    print(output.flatten())
+                    print(targets.flatten())
+                    print(losses)
+                    print(losses.shape)
+                    print(output.shape)
                     losses = losses.view(*output.shape[0:2])
                     loss = losses.mean() / aggregate_k_gradients
 
