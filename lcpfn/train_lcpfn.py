@@ -63,7 +63,7 @@ def train_lcpfn(
     config = dict(
         nlayers=nlayers,
         priordataloader_class=dataloader,
-        criterion=nn.MSELoss(),
+        criterion=nn.MSELoss(reduction='none'),
         # criterion=criterions[num_features][num_borders],
         encoder_generator=lambda in_dim, out_dim: nn.Sequential(
             encoders.Normalize(0.0, 101.0),
