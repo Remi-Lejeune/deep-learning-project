@@ -57,17 +57,16 @@ In addition, when this issue was first noticed, the possibility that the added r
 
 ## Porting to pytorch:
 
-|        Loss        | LCPFN          | Large Model (Forced teaching) | Small Model (Forced teaching) | Small Model | Small Model (Positional encoding: Euclidian distance) |
+| Loss               | LCPFN          | Large Model (Forced teaching) | Small Model (Forced teaching) | Small Model | Small Model (Positional encoding: Euclidian distance) |
 | ------------------ | -------------- | ----------------------------- | ----------------------------- | ----------- | ----------------------------------------------------- |
 | Mean               | **0.0002**     | 2.3589                        | 3.2686                        | 1.9210      | 3.4749                                                |
 | Standard Deviation | **8.0023e-05** | 0.3185                        | 0.5678                        | 0.2005      | 0.5448                                                |
 
-_Table 3: Loss  (mean and standard deviation) for each model_
+_Table 3: Loss (mean and standard deviation) for each model_
 
-| ![Predicted_Curves](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/2197e5e4-74a4-416a-9078-45238f31b397) |
-|:---:|
-| _Figure 3:_ For 6  different target curves we plot the predicted curves of each of the 5 models. The models are given the first 15 points, after which they are tasked with predicting the following 85 points that make up the target curve.|
-
+|                                                       ![Predicted_Curves](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/2197e5e4-74a4-416a-9078-45238f31b397)                                                        |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| _Figure 3:_ For 6 different target curves we plot the predicted curves of each of the 5 models. The models are given the first 15 points, after which they are tasked with predicting the following 85 points that make up the target curve. |
 
 - LCPFN best, then small model, then large model FT, then small model FT, = small NFT and EU
 - Large model forced teaching seems to always predict much higher values. The error linearly gets worse at every step.
@@ -103,17 +102,16 @@ The third and final encoding they use is paired scrambled positional encoding. T
 
 For our code variant we decided to implement a custom encoding. We created a positional encoding module based on the euclidean distance of the points position (x-value) to the start of the curve. We wanted to see if a simple model could achieve the same results as the more complex ones mentioned above.
 
-Result and differences
-
-- SM outperforms EU
-- Eu always predicts more than sm
+We went on to compare our euclidean positional encoding with the standard sin-cos positional encoding using our small (no forced teaching) model. As can be seen in the last two columns of table 3, standard positional encoding (Small model) has a mean loss of 1.921 with a standard deviation of 0.2, thus outperforms our euclidean encoding who's mean loss is 3.475 with a standard deviation of 0.54. One possible explanation for this is that euclidean encoding does not normalise its values depending on the sequence length. As standard encoding uses sin and cos functions, all values are bound by -1 and 1 no matter the length of the input. However, for euclidean distance, the upper bound will increase as the number of points increase. Normalising the euclidean distance values to be between 0 and 1 might help, however this would create a situation where the same point would normalise into different values based on the input size. Another interesting trend that can be seen in figure 3 is that the curve predicted with Euclidean distance encoding is always higher than with standard encoding.
 
 ## Testing their model on new data
-The motivation behind extrapolating learning curves is hyperparameter optimization. Upon defining a model, it is often necessary to conduct cross validation, enumerating over many possible combinations of hyperparamters until the best one is found. Every combination of hyperparameters requires training of a new model instance which consumes considerable time and energy, especially if the model in question is complex. Thus, predicting the trend of the training curve during training would allow for earlier halting of the process, saving considerable time and resources. 
 
-Another great expense when it comes to training models is data collection. Complex models are often of little use when data for training them is sparse, and collecting data can often be very costly. It would hence be very convenient if one could predict how the learning curve of a model will behave with the increase in size of its training dataset.  This idea is fairly analogous to what our paper tries to accomplish, simply substituting the x axis units which were epochs with training dataset size.  
+The motivation behind extrapolating learning curves is hyperparameter optimization. Upon defining a model, it is often necessary to conduct cross validation, enumerating over many possible combinations of hyperparamters until the best one is found. Every combination of hyperparameters requires training of a new model instance which consumes considerable time and energy, especially if the model in question is complex. Thus, predicting the trend of the training curve during training would allow for earlier halting of the process, saving considerable time and resources.
 
-We used the work of Mohr, Viering et al. to try and bring this idea to life. 
+Another great expense when it comes to training models is data collection. Complex models are often of little use when data for training them is sparse, and collecting data can often be very costly. It would hence be very convenient if one could predict how the learning curve of a model will behave with the increase in size of its training dataset. This idea is fairly analogous to what our paper tries to accomplish, simply substituting the x axis units which were epochs with training dataset size.
+
+We used the work of Mohr, Viering et al. to try and bring this idea to life.
+
 ## Limitations
 
 - Each makes a paragraph of our limitations
@@ -124,5 +122,4 @@ We used the work of Mohr, Viering et al. to try and bring this idea to life.
 
 [1] Adriaensen, S., Rakotoarison, H., Müller, S., & Hutter, F. (2023). _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_. arXiv preprint arXiv:2310.20447. Available at: https://arxiv.org/abs/2310.20447
 [2] Domhan, T., Springenberg, J.T., & Hutter, F. (2015). _Speeding Up Automatic Hyperparameter Optimization of Deep Neural Networks by Extrapolation of Learning Curves_. In Proceedings of the Twenty-Fourth International Joint Conference on Artificial Intelligence (IJCAI 2015).
-[3]  Mohr, Felix and Viering, Tom J and Loog, Marco and van Rijn, Jan N (2022). _Machine Learning and Knowledge Discovery in Databases_. Research Track - European Conference
-
+[3] Mohr, Felix and Viering, Tom J and Loog, Marco and van Rijn, Jan N (2022). _Machine Learning and Knowledge Discovery in Databases_. Research Track - European Conference
