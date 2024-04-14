@@ -126,7 +126,7 @@ For the implementation, the goal was to generate sensible plots and measure perf
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
 | _Figure 5:_ LCPFN with different neural network sizes, for one of the chosen training curves. Blue points are observations, green points are the actual values, red points are predicted accuracies.|
 
-Additionaly, the model was adjusted and trained with different numbers of heads and linear layers. All the combinations with the encoding sizes of 256 and 128 coupled with layers of size 12, 10 and 8 were evaluated and showed unflattering performance upon visualization.
+Additionaly, the model was adjusted and trained with different numbers of heads and linear layers. All the combinations with the encoding sizes of 256 and 128 coupled with layers of size 12, 10 and 8 were trained on 10 epochs. Similar to previously mentioned, they showed good performance during training, but upon visualization look very lackluster, indicating a flaw in the implementation.
 
 
 ## Limitations
