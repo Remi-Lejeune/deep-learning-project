@@ -48,6 +48,7 @@ The reproduction process, unlike that of the LC-PFN, was unsuccessful. This was 
 | Original Paper| nsamples = 4000, nwalkers = 100, burn-in = 500, thin = 1 | 103.151 |
 | Original Paper| Nsamples = 100, nwalkers = 100, burn-in and thin unknown | ~1 |
 | Reproduction | Nsamples = 100, nwalkers = 100, burnin = 10, thin = 1 | 2190.6 |
+
 _Table 2: Comparison in MCMC runtimes_
 
 Note that, indeed, the hardware used in the reproduction process is not as powerful as what was used in the original study. Nevertheless, given the magnitude of the discrepancy, it is very unlikely that this was a main cause for it.
@@ -56,10 +57,12 @@ In addition, when this issue was first noticed, the possibility that the added r
 
 ## Porting to pytorch:
 
-|                    | LCPFN          | Large Model (Forced teaching) | Small Model (Forced teaching) | Small Model | Small Model (Positional encoding: Euclidian distance) |
+|        Loss        | LCPFN          | Large Model (Forced teaching) | Small Model (Forced teaching) | Small Model | Small Model (Positional encoding: Euclidian distance) |
 | ------------------ | -------------- | ----------------------------- | ----------------------------- | ----------- | ----------------------------------------------------- |
 | Mean               | **0.0002**     | 2.3589                        | 3.2686                        | 1.9210      | 3.4749                                                |
 | Standard Deviation | **8.0023e-05** | 0.3185                        | 0.5678                        | 0.2005      | 0.5448                                                |
+
+_Table 3: Loss  (mean and standard deviation) for each model_
 
 - LCPFN best, then small model, then large model FT, then small model FT, = small NFT and EU
 - Large model forced teaching seems to always predict much higher values. The error linearly gets worse at every step.
@@ -87,7 +90,7 @@ Figure 1 shows an example computation of the positional encoding matrix.
 
 |          ![pos_enc](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/70a6e302-4e3c-4022-af1f-aa2f13c2f850)           |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| _Figure 1:_ Encoding of 4 point sequence using standard (sin-cos) positional encoding where d = 4 and n = 4. Each row represents a point. |
+| _Figure 3:_ Encoding of 4 point sequence using standard (sin-cos) positional encoding where d = 4 and n = 4. Each row represents a point. |
 
 The second positional encoding used by the paper is learned positional encoding. Instead of using a fixed mathematical model and equations, the positional encodings are learned with the model parameters during training. This allows for a more tailored embedding as it can be modeled to specific characteristics of the data.
 
