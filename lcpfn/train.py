@@ -196,6 +196,9 @@ def train(
             len(dl) % aggregate_k_gradients == 0
         ), "Please set the number of steps per epoch s.t. `aggregate_k_gradients` divides it."
         for batch, (data, targets, single_eval_pos) in enumerate(dl):
+            [print(e) for e in data]
+            #print(type(data))
+
             if using_dist and not (
                 batch % aggregate_k_gradients == aggregate_k_gradients - 1
             ):
@@ -214,7 +217,7 @@ def train(
                         else data.to(device),
                         single_eval_pos=single_eval_pos,
                     )
-
+                    
                     forward_time = time.time() - before_forward
 
                     if single_eval_pos is not None:
