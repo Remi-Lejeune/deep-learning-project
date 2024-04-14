@@ -136,7 +136,7 @@ def train(
         nlayers,
         dropout,
         style_encoder=style_encoder,
-        y_encoder=y_encoder_generator(1, emsize),
+        y_encoder=y_encoder_generator(1, emsize), #TODO
         input_normalization=input_normalization,
         pos_encoder=(
             pos_encoder_generator or positional_encodings.NoPositionalEncoding

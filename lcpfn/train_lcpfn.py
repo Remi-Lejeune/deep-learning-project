@@ -13,7 +13,7 @@ def train_lcpfn(
     nlayers: int = 12,
     num_borders: int = 1000,
     lr: float = 0.001,
-    batch_size: int = 100,
+    batch_size: int = 100, 
     epochs: int = 1000,
 ):
     """
@@ -38,16 +38,18 @@ def train_lcpfn(
     # PFN training hyperparameters
     dataloader = priors.utils.get_batch_to_dataloader(get_batch_func)  # type: ignore
 
-    num_features = 1
+    num_features = 1 #LALA
 
     ys = get_batch_func(
-        10_000,
+        10_000,#HELLA
         seq_len,
         num_features,
         hyperparameters=hps,
         single_eval_pos=seq_len,
     )
-
+    #print(ys)
+    print('nb', num_borders)
+    print('ys', ys[2])
     bucket_limits = bar_distribution.get_bucket_limits(num_borders, ys=ys[2])
 
     # Discretization of the predictive distributions
