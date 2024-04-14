@@ -135,7 +135,8 @@ One of the main limitation of our project is the lack of computational resources
 In addition, the lcpfn framework has a very long and convoluted pipeline, is very hard coded, many of it's functions were never tested or used and were left there as remenants and it does not allow for simple model defining outside of calling the training loop. It required a lot of backwards engineering and overhauling to adjust it to some of the desired purposes. Note that the original work was not meant to be used in this fashion, still, it posed a challenge.
 
 ## Conculsion and future work
-In this work a reproducing the functionalities and results of _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_ [1] is done. Additional implementations using the paradigm the paper presents is also attempted.   
+In this work a reproducing the functionalities and results of _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_ [1] is done. Additional implementations using the paradigm the paper presents is also attempted. The reproduction of the LC-PFN model used in the paper was successful, whereas the reporoduction of the MCMC model posed a greater challenge due to its computational cost. The code was reimplemented using new pytorch modules and different variations of the models, they general underperformed compared to the base model. Finally, the evaluation of a different dataset was attempted on the base model which required a great amount of changes and was not deemed successful. Finally an ablation study using the same dataset was conducted.  
+
 ## References
 
 [1] Adriaensen, S., Rakotoarison, H., Müller, S., & Hutter, F. (2023). _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_. arXiv preprint arXiv:2310.20447. Available at: https://arxiv.org/abs/2310.20447
