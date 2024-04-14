@@ -112,6 +112,8 @@ Result and differences
 The motivation behind extrapolating learning curves is hyperparameter optimization. Upon defining a model, it is often necessary to conduct cross validation, enumerating over many possible combinations of hyperparamters until the best one is found. Every combination of hyperparameters requires training of a new model instance which consumes considerable time and energy, especially if the model in question is complex. Thus, predicting the trend of the training curve during training would allow for earlier halting of the process, saving considerable time and resources. 
 
 Another great expense when it comes to training models is data collection. Complex models are often of little use when data for training them is sparse, and collecting data can often be very costly. It would hence be very convenient if one could predict how the learning curve of a model will behave with the increase in size of its training dataset.  This idea is fairly analogous to what our paper tries to accomplish, simply substituting the x axis units which were epochs with training dataset size.  
+
+We used the work of Mohr, Viering et al. to try and bring this idea to life. 
 ## Limitations
 
 - Each makes a paragraph of our limitations
@@ -122,3 +124,4 @@ Another great expense when it comes to training models is data collection. Compl
 
 [1] Adriaensen, S., Rakotoarison, H., Müller, S., & Hutter, F. (2023). _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_. arXiv preprint arXiv:2310.20447. Available at: https://arxiv.org/abs/2310.20447
 [2] Domhan, T., Springenberg, J.T., & Hutter, F. (2015). _Speeding Up Automatic Hyperparameter Optimization of Deep Neural Networks by Extrapolation of Learning Curves_. In Proceedings of the Twenty-Fourth International Joint Conference on Artificial Intelligence (IJCAI 2015).
+
