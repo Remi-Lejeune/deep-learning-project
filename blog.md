@@ -8,7 +8,7 @@
 ## Reproducing their results
 ## Porting to pytorch:
 
-|   | LCPFN | Large model | Small model | Small model (No forced teaching) | Small  model (No  forced teaching) (Positional encoding: Euclidian distance)|
+|   | LCPFN | Large Model | Small Model (Forced teaching) | Small Model | Small  Model (Positional encoding: Euclidian distance)|
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Mean  |  **0.0002**  | 2.3589 | 3.2686 | 1.9210 | 3.4749 |
 | Standard Deviation  | **8.0023e-05**  | 0.3185 | 0.5678 | 0.2005 | 0.5448 |
