@@ -126,7 +126,7 @@ For the implementation, the goal was to generate sensible plots and measure perf
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
 | _Figure 5:_ LCPFN with different neural network sizes, for one of the chosen training curves. Blue points are observations, green points are the actual values, red points are predicted accuracies.|
 
-Additionaly, the model was adjusted and trained with different numbers of heads and linear layers. All the combinations with the encoding sizes of 256 and 128 coupled with layers of size 12, 10 and 8 were trained on 10 epochs. Similar to previously mentioned, they showed good performance during training, but upon visualization look very lackluster, indicating a flaw in the implementation.
+Additionaly, the model was adjusted and trained with different numbers of heads and linear layers. All the combinations with the encoding sizes of 256 and 128 coupled with layers of size 12, 10 and 8 were trained on 10 epochs. Similar to previously mentioned, they showed good performance during training, but upon visualization look very lackluster, indicating a flaw in the implementation. 
 
 
 ## Limitations
@@ -134,8 +134,9 @@ Additionaly, the model was adjusted and trained with different numbers of heads 
 One of the main limitation of our project is the lack of computational resources. The results in the paper were produced with models traind on 100k to 10M curves. The models trained in the 'simplyfing to pytorch' chapter were trained on 6.4k curves. Training the models with similar resources would provide a fairer comparison with the paper's model.
 In addition, the lcpfn framework has a very long and convoluted pipeline, is very hard coded, many of its functions were never tested or used and were left there as remenants and it does not allow for simple model defining outside of calling the training loop. It required a lot of backwards engineering and overhauling to adjust it to some of the desired purposes. Note that the original work was not meant to be used in this fashion, still, it posed a challenge.
 
-## Conculsion and future work
-In this work a reproduction of the functionalities and results of _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_ [1] is done. Additional implementations using the paradigm the paper presents is also attempted. The reproduction of the LC-PFN model used in the paper was successful, whereas the reporoduction of the MCMC model posed a greater challenge due to its computational cost. The code was reimplemented using new pytorch modules and different variations of the models, they general underperformed compared to the base model. Finally, the evaluation of a different dataset was attempted on the base model which required a great amount of changes and was not deemed successful. Finally an ablation study using the same dataset was conducted.  
+## Conclusion and Future work
+In this work a reproduction of the functionalities and results of _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_ [1] is done. Additional implementations using the paradigm the paper presents is also attempted. The reproduction of the LC-PFN model used in the paper was successful, whereas the reporoduction of the MCMC model posed a greater challenge due to its computational cost. The code was reimplemented using new pytorch modules and different variations of the models, they general underperformed compared to the base model. Finally, the evaluation of a different dataset was attempted on the base model which required a great amount of changes and was not deemed successful. Finally an ablation study using the same dataset was conducted. 
+This research area opens up the avenue of extrapolating the learning curves based on many different factors, such as for instance the size of the training dataset, which was explored in this work. We leave this to future research. 
 
 ## References
 
