@@ -124,7 +124,7 @@ For the implementation, the goal was to generate sensible plots and measure perf
 
 |          ![lcdb](https://raw.githubusercontent.com/Remi-Lejeune/deep-learning-project/86883a79833351a6adb3e6f42e1e2b291ac40bff/notebooks/grid.svg)           |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| _Figure 5:_ LCPFN with different neural network sizes. Blue points are observations, green points are the actual values, red points are predicted accuracies.|
+| _Figure 5:_ LCPFN with different neural network sizes, for one of the chosen training curves. Blue points are observations, green points are the actual values, red points are predicted accuracies.|
 
 Additionaly, the model was adjusted and trained with different numbers of heads and linear layers. All the combinations with the encoding sizes of 256 and 128 coupled with layers of size 12, 10 and 8 were evaluated and showed unflattering performance upon visualization.
 
