@@ -57,6 +57,12 @@ In addition, when this issue was first noticed, the possibility that the added r
 
 ## Porting to pytorch:
 
+The paper "Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks" [1] was published in october of 2023. Since then, Pytorch [4] has added support for building transformer modules. In this chapter we attempt to replicate their model by building a transformer model using Pytroch libraries. This would improve the readability of the code and remove several thousands of lines of code over several files that would become redundant with the integration of Pytorch.
+
+We iterated through 4 different models as shown in Table 3. Each model was trained with 6400 curves in batches of 64, was made up of 4 layers and 8 multi-attention heads. The first was a transformer model trained with a model dimension of 128 and a feed forwards dimension of 512. Due to the first model’s poor performance, we lowered the dimensions of our second model. The idea behind this was that a simpler model might generalize better of the dataset. This did not improve the performance over all.
+
+Our third model consisted of the same parameters as our second, but with the removal of forced teaching in our training algorithm. Instead of using the true values of the curve as inputs to the model when making its prediction, we instead give it its predictions of the previous points. This allows the loss to accumulate and be reflected in the total loss used to update the model parameters. Instead of the error of the model being refreshed at every prediction step, the model is punished for multiple wrong predictions in the same direction. Removing forced teaching creates a bigger incentive for the full predicted curve to remain closer to the target curve. For our last model we replaced the positional encoding with our own variant. This is further explained in the next chapter.
+
 | Loss               | LCPFN          | Large Model (Forced teaching) | Small Model (Forced teaching) | Small Model | Small Model (Positional encoding: Euclidian distance) |
 | ------------------ | -------------- | ----------------------------- | ----------------------------- | ----------- | ----------------------------------------------------- |
 | Mean               | **0.0002**     | 2.3589                        | 3.2686                        | 1.9210      | 3.4749                                                |
@@ -64,16 +70,13 @@ In addition, when this issue was first noticed, the possibility that the added r
 
 _Table 3: Loss (mean and standard deviation) for each model_
 
+To compare the performance of our models and the paper’s model we measured the average loss of 10 predictions of 100 curves. The result of this can be seen in Table 3. The paper’s model (LCPFN) was shown to outperform all other models with a mean of 0.0002 and a standard deviation of 8.0023e-05. The small model without forced teaching was the best performing of our models with a mean of 1.9210 and standard deviation of 0.2005. The large model with forced teaching came third. The small model with forced teaching and the model with our variant positional encoding both had a similar result.
+
 |                                                       ![Predicted_Curves](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/2197e5e4-74a4-416a-9078-45238f31b397)                                                        |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | _Figure 3:_ For 6 different target curves we plot the predicted curves of each of the 5 models. The models are given the first 15 points, after which they are tasked with predicting the following 85 points that make up the target curve. |
 
-- LCPFN best, then small model, then large model FT, then small model FT, = small NFT and EU
-- Large model forced teaching seems to always predict much higher values. The error linearly gets worse at every step.
-- Small model forced teaching seems to have a bias towards getting to the a value of 4.5. all curves tend towards this value. Could be result of forced teaching
-- Forced teaching curves do not go straight. As given true point as input everytime, error stacks on top of each other.
-
-- more curves can be found in our repository under:
+Several trends can be observed when plotting the predictions of the models against target curves (see figure 6). More examples of plots can be found in our repository under ‘/graphs’. Firstly, the large model always predicts higher values than the true target curve and is always increasing, except when the generated target curve is already approaching the max value 1. Secondly, the small model with forced teaching appears to always tend towards a value of around 4.5. A possible explanation is that 4.5 is the mean of the training dataset and the model is attempting to minimize total loss by reaching that value. Lastly, we notice a collocation between the shape of the curves of models with forced teaching and the shape of the curve for models without. The models with forced teaching are able to achieve a smoother curve that straightens out, whereas the models with forced teaching taper off in either direction. As mentioned above, this is because forced teaching strongly incentivises the sum of point predictions not to deviate too hard in one direction.
 
 - Assumption: Less resources to train
 
@@ -106,16 +109,16 @@ We went on to compare our euclidean positional encoding with the standard sin-co
 
 ## Testing their model on new data
 
-The motivation behind extrapolating learning curves is hyperparameter optimization. Upon defining a model, it is often necessary to conduct cross validation, enumerating over many possible combinations of hyperparamters until the best one is found. Every combination of hyperparameters requires training of a new model instance which consumes considerable time and energy, especially if the model in question is complex. Thus, predicting the trend of the training curve during training would allow for earlier halting of the process, saving considerable time and resources. 
+The motivation behind extrapolating learning curves is hyperparameter optimization. Upon defining a model, it is often necessary to conduct cross validation, enumerating over many possible combinations of hyperparamters until the best one is found. Every combination of hyperparameters requires training of a new model instance which consumes considerable time and energy, especially if the model in question is complex. Thus, predicting the trend of the training curve during training would allow for earlier halting of the process, saving considerable time and resources.
 
-Another great expense, when it comes to training models, is data collection. Complex models are often of little use when data for training them is sparse, and collecting data can often be very costly. It would hence be very convenient if one could predict how the learning curve of a model will behave with the increase in size of its training dataset.  This idea is fairly analogous to what our paper tries to accomplish, simply substituting the x axis units which were epochs with training dataset size.  
+Another great expense, when it comes to training models, is data collection. Complex models are often of little use when data for training them is sparse, and collecting data can often be very costly. It would hence be very convenient if one could predict how the learning curve of a model will behave with the increase in size of its training dataset. This idea is fairly analogous to what our paper tries to accomplish, simply substituting the x axis units which were epochs with training dataset size.
 
-The work of Mohr, Viering et al. [3] was used to try and bring this idea to life. Their repository provides a means to easily access datasets describing learning curves in relation to the dataset size from openml.org in a convenient manner. 
+The work of Mohr, Viering et al. [3] was used to try and bring this idea to life. Their repository provides a means to easily access datasets describing learning curves in relation to the dataset size from openml.org in a convenient manner.
 To access a curve one needs to define the dataset name or id and the learner used. By doing a carthesian product over all the dataset ids and learners a dataset of some 44000 entries was assembled. Each learning curve, given by the pair (dataset, learner), contained the x-axis values, i.e. the dataset sizes scaling with the power of $\sqrt{2}$ . For every point on the x-axis, 125 points were given on the y-axis, each representing one observation of one training loop. These values were pooled using a simple average pooling. Since not all of the curves had the same amount of observations we decided to dropped all that did not have 12, 14, 16, 18, 20, 22, 24 or 26 observations. Then, piecewise linear interpolation was performed which brought the number of the observations for every remaining curve to 26. Normalization over training dataset size was further performed, removing the datasets with unknown size beforehand. This final dataset was loaded into a json file for easier transport into the lcpfn framework.
 
-The original, non-reproduced, lcpfn framework was used for this task in the hopes that it would minimize the probability of error. Still, the attempt was largely unsuccesful. 
+The original, non-reproduced, lcpfn framework was used for this task in the hopes that it would minimize the probability of error. Still, the attempt was largely unsuccesful.
 
-The lcpfn framework has a very long and convoluted pipeline, is very hard coded, many of it's functions were never tested or used and were left there as remenants and it does not allow for simple model defining outside of calling the training loop. It required a lot of backwards engineering and overhauling to get . 
+The lcpfn framework has a very long and convoluted pipeline, is very hard coded, many of it's functions were never tested or used and were left there as remenants and it does not allow for simple model defining outside of calling the training loop. It required a lot of backwards engineering and overhauling to get .
 
 ## Limitations
 
