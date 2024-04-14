@@ -64,6 +64,11 @@ In addition, when this issue was first noticed, the possibility that the added r
 
 _Table 3: Loss  (mean and standard deviation) for each model_
 
+| ![Predicted_Curves](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/2197e5e4-74a4-416a-9078-45238f31b397) |
+|:---:|
+| _Figure 3:_ For 6  different target curves we plot the predicted curves of each of the 5 models. The models are given the first 15 points, after which they are tasked with predicting the following 85 points that make up the target curve.|
+
+
 - LCPFN best, then small model, then large model FT, then small model FT, = small NFT and EU
 - Large model forced teaching seems to always predict much higher values. The error linearly gets worse at every step.
 - Small model forced teaching seems to have a bias towards getting to the a value of 4.5. all curves tend towards this value. Could be result of forced teaching
@@ -90,7 +95,7 @@ Figure 1 shows an example computation of the positional encoding matrix.
 
 |          ![pos_enc](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/70a6e302-4e3c-4022-af1f-aa2f13c2f850)           |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| _Figure 3:_ Encoding of 4 point sequence using standard (sin-cos) positional encoding where d = 4 and n = 4. Each row represents a point. |
+| _Figure 4:_ Encoding of 4 point sequence using standard (sin-cos) positional encoding where d = 4 and n = 4. Each row represents a point. |
 
 The second positional encoding used by the paper is learned positional encoding. Instead of using a fixed mathematical model and equations, the positional encodings are learned with the model parameters during training. This allows for a more tailored embedding as it can be modeled to specific characteristics of the data.
 
