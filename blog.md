@@ -55,7 +55,7 @@ Note that, indeed, the hardware used in the reproduction process is not as power
 
 In addition, when this issue was first noticed, the possibility that the added runtime ocurred due to misuse of the authors’ code was, naturally, considered. To reduce the risk of such an error being responsible for the irreproducibility, the exisiting codebase was once more analyzed in order to find a example of how to construct, fit, and conduct inference with an MCMC model. Such an example was found in a method responsible for building from scratch and evaluating MCMC models and used as a comparison to correct possible mistakes. However, the re-implementation and the example implementation utilized the pipeline in the same manner. This agreement between the re-implementation and the authors’ own implementation make it very unlikely that an implementation error during reproduction is responsible for the issue at hand.
 
-## Simpligying transformer using PyTorch:
+## Simplifying the Transformer using PyTorch:
 
 The code used to build the transformer model presented by the paper [1] spans 16 different files totaling several thousands of lines. In this chapter we attempt to replicate their model by building a transformer model using Pytroch libraries. This would improve the readability of the code and remove the thousands of lines of code now made redundant due to the integration of PyTorch.
 
