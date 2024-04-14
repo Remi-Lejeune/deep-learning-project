@@ -78,8 +78,6 @@ To compare the performance of our models and the paper’s model we measured the
 
 Several trends can be observed when plotting the predictions of the models against target curves (see figure 6). More examples of plots can be found in our repository under ‘/graphs’. Firstly, the large model always predicts higher values than the true target curve and is always increasing, except when the generated target curve is already approaching the max value 1. Secondly, the small model with forced teaching appears to always tend towards a value of around 4.5. A possible explanation is that 0.45 is the mean of the training dataset and the model is attempting to minimize total loss by reaching that value. Lastly, we notice a collocation between the shape of the curves of models with forced teaching and the shape of the curve for models without. The models with forced teaching are able to achieve a smoother curve that straightens out, whereas the models with forced teaching taper off in either direction. As mentioned above, this is because forced teaching strongly incentivises the sum of point predictions not to deviate too hard in one direction.
 
-- Assumption: Less resources to train
-
 ## Positional Encoding:
 
 Transformers do not take the position of its input data points into account. They treat each point as independent. But the order of the points in a curve are highly relevant, therefore we use positional encoding to give information on the order of the input sequence to the transformer. This is done by mapping each point of the curve to a positional vector. There exists many variants of positional encoding.
@@ -122,7 +120,7 @@ The lcpfn framework has a very long and convoluted pipeline, is very hard coded,
 
 ## Limitations
 
-- Each makes a paragraph of our limitations
+One of the main limitation of our project is the lack of computational resources. The results in the paper were produced with models traind on 100k to 10M curves. The models trained in the 'simplyfing to pytorch' chapter were trained on 6.4k curves. Training the models with similar resources would provide a fairer comparison with the paper's model.
 
 ## Conculsion and future work
 
