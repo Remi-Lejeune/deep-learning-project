@@ -6,7 +6,13 @@
 - Their results
 - List out what we will do 
 ## Reproducing their results
-## Porting to pytorch
+## Porting to pytorch:
+
+|   | LCPFN | Large model | Small model | Small model (No forced teaching) | Small  model (No  forced teaching) (Positional encoding: Euclidian distance)|
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| Mean  |  **0.0002**  | 2.3589 | 3.2686 | 1.9210 | 3.4749 |
+| Standard Deviation  | **8.0023e-05**  | 0.3185 | 0.5678 | 0.2005 | 0.5448 |
+
 ## Positional Encoding:
 
 Transformers do not take the position of its input data points into account. They treat each point as independent. But the order of the points in a curve are highly relevant, therefore we use positional encoding to give information on the order of the input sequence to the transformer. This is done by mapping each point of the curve to a positional vector. There exists many variants of positional encoding.
@@ -28,10 +34,6 @@ The third and final encoding they use is paired scrambled positional encoding. T
 
 For our code variant we decided to implement a custom encoding. We created a positional encoding module based on the euclidean distance of the points position (x-value) to the start of the curve. We wanted to see if a simple model could achieve the same results as the more complex ones mentioned above.
 
-|   | LCPFN | Large model | Small model | Small model (No forced teaching) | Small  model (No  forced teaching) (Positional encoding: Euclidian distance)|
-| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Mean  |  **0.0002**  | 2.3589 | 3.2686 | 1.9210 | 3.4749 |
-| Standard Deviation  | **8.0023e-05**  | 0.3185 | 0.5678 | 0.2005 | 0.5448 |
 
 
 - Result and differences 
