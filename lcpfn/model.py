@@ -2,9 +2,14 @@ import torch
 import lcpfn
 
 class LCPFN(torch.nn.Module):
-    def __init__(self, model_name="EMSIZE512_NLAYERS12_NBUCKETS1000"):
+    # def __init__(self, model_name="EMSIZE512_NLAYERS12_NBUCKETS1000"):
+    #     super(LCPFN, self).__init__()
+    #     self.model = torch.load(getattr(lcpfn, model_name) if model_name in lcpfn.model_dict else model_name)
+    #     self.model.eval()
+
+    def __init__(self, model):
         super(LCPFN, self).__init__()
-        self.model = torch.load(getattr(lcpfn, model_name) if model_name in lcpfn.model_dict else model_name)
+        self.model = model
         self.model.eval()
 
     @torch.no_grad()
@@ -15,7 +20,9 @@ class LCPFN(torch.nn.Module):
     @torch.no_grad()
     def predict_quantiles(self, x_train, y_train, x_test, qs):
         logits = self(x_train=x_train, y_train=y_train, x_test=x_test)
-        return torch.cat([self.model.criterion.icdf(logits, q) for q in qs], dim=1)
+        #return torch.cat([self.model.criterion.icdf(logits, q) for q in qs], dim=1)
+        return torch.cat([self.model.criterion(logits, q) for q in qs], dim=1)
+
 
     @torch.no_grad()
     def nll_loss(self, x_train, y_train, x_test, y_test):
