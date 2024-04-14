@@ -1,5 +1,10 @@
 # Blog for: Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks
-
+|Name| Email | StudentID | Task |
+|:---:|:---:|:---:|:---:|
+|Arthur Mercier | A.G.Mercier@student.tudelft.nl | 5056195 | Variant (Positional encoding) & Simplifying Transformer |
+|Remi Lejeune | R.J.Lejeune@student.tudelft.nl | 5040841 | Variant (Positional encoding) & Simplifying Transformer |
+| Marin Jaić |
+| António Costa Bernardes | acostabernarde@tudelft.nl | 5851904 | Reproducing paper results: inference LC-PFN & MCMC |
 ## Introduction
 
 In the machine learning field, where computational requirements are fast increasing with the needs for more powerful predictive models, being able to predict a model’s training performance when given more resources would be of great benefit for training efficiency both time and cost-wise.
