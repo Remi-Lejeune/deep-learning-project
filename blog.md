@@ -28,6 +28,12 @@ The third and final encoding they use is paired scrambled positional encoding. T
 
 For our code variant we decided to implement a custom encoding. We created a positional encoding module based on the euclidean distance of the points position (x-value) to the start of the curve. We wanted to see if a simple model could achieve the same results as the more complex ones mentioned above.
 
+|   | LCPFN | Large model | Small model | Small model (No forced teaching) | Small  model (No  forced teaching) (Positional encoding: Euclidian distance)|
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| Mean  |  **0.0002**  | 2.3589 | 3.2686 | 1.9210 | 3.4749 |
+| Standard Deviation  | **8.0023e-05**  | 0.3185 | 0.5678 | 0.2005 | 0.5448 |
+
+
 - Result and differences 
 - why?
 
