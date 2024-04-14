@@ -3,7 +3,8 @@
 |:---:|:---:|:---:|:---:|
 |Arthur Mercier | A.G.Mercier@student.tudelft.nl | 5056195 | Variant (Positional encoding) & Simplifying Transformer |
 |Remi Lejeune | R.J.Lejeune@student.tudelft.nl | 5040841 | Variant (Positional encoding) & Simplifying Transformer |
-| Marin Jaić |
+| Marin Jaić | M.Jaic@student.tudelt.nl | 6075185 | Ablation study & adapting model to new dataset |
+| Patrik Kukic | | | |
 | António Costa Bernardes | acostabernarde@tudelft.nl | 5851904 | Reproducing paper results: inference LC-PFN & MCMC |
 ## Introduction
 
