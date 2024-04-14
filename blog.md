@@ -124,4 +124,5 @@ We used the work of Mohr, Viering et al. to try and bring this idea to life.
 
 [1] Adriaensen, S., Rakotoarison, H., Müller, S., & Hutter, F. (2023). _Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks_. arXiv preprint arXiv:2310.20447. Available at: https://arxiv.org/abs/2310.20447
 [2] Domhan, T., Springenberg, J.T., & Hutter, F. (2015). _Speeding Up Automatic Hyperparameter Optimization of Deep Neural Networks by Extrapolation of Learning Curves_. In Proceedings of the Twenty-Fourth International Joint Conference on Artificial Intelligence (IJCAI 2015).
+[3]  Mohr, Felix and Viering, Tom J and Loog, Marco and van Rijn, Jan N (2022). _Machine Learning and Knowledge Discovery in Databases_. Research Track - European Conference
 
