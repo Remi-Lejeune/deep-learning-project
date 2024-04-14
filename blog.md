@@ -122,6 +122,10 @@ To access a curve one needs to define the dataset name or id and the learner use
 
 For the implementation, the goal was to generate sensible plots and measure performance on a test set. The original, non-reproduced, lcpfn framework was used for this task in the hopes that it would minimize the probability of error. Still, the attempt was largely unsuccesful. The framework was very rigid and hard to adjust to this task. It required a lot of tinkering with the code to load the data and adjuts the models and the loss functions. The end result exhibited good training loss in the range of 0.02 which usually converged after only 3 epochs but upon generating plots, very bad performance was observed. This raised doubts about the whole training procedure and barely any formal testing was done. Plots are submitted as a formality. It is suspected that the model would have performed better if a bigger dataset were avaliable.
 
+|          ![lcdb](https://raw.githubusercontent.com/Remi-Lejeune/deep-learning-project/86883a79833351a6adb3e6f42e1e2b291ac40bff/notebooks/grid.svg)           |
+| :---------------------------------------------------------------------------------------------------------------------------------------: |
+| _Figure 5:_ LCPFN with different neural network sizes. Blue points are observations, green points are the actual values, red points are predicted accuracies.|
+
 Additionaly, the model was adjusted and trained with different numbers of heads and linear layers. All the combinations with the encoding sizes of 256 and 128 coupled with layers of size 12, 10 and 8 were evaluated and showed unflattering performance upon visualization.
 
 
