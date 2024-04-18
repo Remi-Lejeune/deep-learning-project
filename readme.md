@@ -3,8 +3,9 @@
 
 The steps and results of our reproduction are described in our [blog](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/blog.md).
 
-The Transformer models and training loop code described in sections *Simplifying the Transformer using PyTorch* and *Positional Encoding:* can be found in the [training_models](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/training_models.ipynb) jupyter notebook.
-The code that produced the results (table  and graph) for sections *Simplifying the Transformer using PyTorch* and *Positional Encoding:* can be found in  the [testing](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/testing.ipynb) jupyter notebook.
+Where to find our code contributions:
+- The Transformer models and training loop code described in sections *Simplifying the Transformer using PyTorch* and *Positional Encoding*  can be found in the [training_models](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/training_models.ipynb) jupyter notebook.
+- The code that produced the results (table  and graph) for sections *Simplifying the Transformer using PyTorch* and *Positional Encoding* can be found in  the [testing](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/testing.ipynb) jupyter notebook.
 
 ### Installation
 
