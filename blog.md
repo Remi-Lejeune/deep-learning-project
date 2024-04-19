@@ -72,7 +72,7 @@ _Table 2: Comparison of architecture and runtime between model created for repro
 
 An analysis of Figure 4 reveals that, the performance of the reproduction model is indeed comparable to that of the provided model, although not performing quite as well - an expected result given, for example, the differnece in size of the two models. This difference in size is also reflected in the average inference times shown in Table 2.
 
-Note that the weights for both the [reproduction model](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/reproduction_model.pt) and the [given model](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/pfn_EPOCH1000_EMSIZE512_NLAYERS12_NBUCKETS1000.pt) can be found in [this directory](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/).
+Note that the weights for both the [reproduction model](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/reproduction_model.pt) and the [given model](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/pfn_EPOCH1000_EMSIZE512_NLAYERS12_NBUCKETS1000.pt.gz) can be found in [this directory](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/).
 
 
 ### Inference with MCMC
