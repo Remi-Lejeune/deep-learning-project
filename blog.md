@@ -5,7 +5,7 @@
 |Remi Lejeune | R.J.Lejeune@student.tudelft.nl | 5040841 | Variant (Positional encoding) & Simplifying Transformer |
 | Marin Jaić | M.Jaic@student.tudelt.nl | 6075185 | Ablation study & adapting model to new dataset |
 | Patrik Kukić | P.Kukic@student.tudelft.nl | 6066559 | Ablation study & adapting model to new dataset |
-| António Bernardes | A.P.CostaBernarde@student.tudelft.nl | 5851904 | Reproducing paper results: inference LC-PFN & MCMC |
+| António Bernardes | A.P.CostaBernardes@student.tudelft.nl | 5851904 | Reproducing paper results: inference LC-PFN & MCMC |
 ## Introduction
 
 In the machine learning field, where computational requirements are fast increasing with the needs for more powerful predictive models, being able to predict a model’s training performance when given more resources would be of great benefit for training efficiency both time and cost-wise.
@@ -47,7 +47,7 @@ _Table 1: Hardware used in the original paper [1] and in the reproduction_
 
 The first step was to obtain a trained LC-PFN model. To this end, the interface provided by the authors for traning such models was used.
 
-The model was set to handle sequences of length 100 and included an embedding size of 256 and 3 layers. This architecture was chosen to mimic that of the smaller model tested by the authors, thus testing if the least powerful model highlighted in the paper is indeed able to achieve satisfactory results. The model was trained with 50k curves for 300 epochs (a total training time of slightly less than five hours compared to the total of around 8 hours mentioned in the paper for the largest model).
+The model was set to handle sequences of length 100 and included an embedding size of 256 and 3 layers. This architecture was chosen to mimic that of the smaller model tested by the authors, thus testing if the least powerful model highlighted in the paper is indeed able to achieve satisfactory results. The model was trained with 50k curves for 300 epochs (a total training time of slightly less than five hours compared to the total of around 8 hours mentioned in [1] for the largest model).
 
 After training the model, it was put to the test with two target curves shown with cutoffs 10 and 20 as previously mentioned. The target curves and the network’s predictions when fed 10 or 20 epochs of each curve are shown in Figure 3.
 
@@ -90,9 +90,9 @@ The reproduction process, unlike that of the LC-PFN, was unsuccessful. This was 
 
 _Table 3: Comparison in MCMC runtimes_
 
-Note that, indeed, the hardware used in the reproduction process is not as powerful as what was used in the original study. Nevertheless, given the magnitude of the discrepancy, it is very unlikely that this was a main cause for it.
+Note that, indeed, the hardware used in the reproduction process is not as powerful as what was used in the original study (specific models shown in Table 1). Nevertheless, given the magnitude of the discrepancy, it is very unlikely that this was a main cause for it.
 
-In addition, when this issue was first noticed, the possibility that the added runtime ocurred due to misuse of the authors’ code was, naturally, considered. To reduce the risk of such an error being responsible for the irreproducibility, the exisiting codebase was once more analyzed in order to find a example of how to construct, fit, and conduct inference with an MCMC model. Such an example was found in a method responsible for building from scratch and evaluating MCMC models and used as a comparison to correct possible mistakes. However, the re-implementation and the example implementation utilized the pipeline in the same manner. This agreement between the re-implementation and the authors’ own implementation make it very unlikely that an implementation error during reproduction is responsible for the issue at hand.
+In addition, when this issue was first noticed, the possibility that the added runtime ocurred due to misuse of the authors’ code during reproduction was, naturally, considered. To reduce the risk of such an error being responsible for the irreproducibility, the exisiting codebase was once more analyzed in order to find a example of how to construct, fit, and conduct inference with an MCMC model. Such an example was found in a method responsible for building from scratch and evaluating MCMC models and used as a comparison to correct possible mistakes. However, the re-implementation and the example implementation utilized the pipeline in the same manner. This agreement between the re-implementation and the authors’ own implementation make it very unlikely that an implementation error during reproduction is responsible for the issue at hand.
 
 ## Simplifying the Transformer using PyTorch:
 
