@@ -85,14 +85,14 @@ The reproduction process, unlike that of the LC-PFN, was unsuccessful. This was 
 | Original Paper| nsamples = 2000, nwalkers = 100, burn-in = 500, thin = 1 | 54.401 |
 | Original Paper| nsamples = 4000, nwalkers = 100, burn-in = 100, thin = 100 | 45.160 |
 | Original Paper| nsamples = 4000, nwalkers = 100, burn-in = 500, thin = 1 | 103.151 |
-| Original Paper| Nsamples = 100, nwalkers = 100, burn-in and thin unknown | ~1 |
-| Reproduction | Nsamples = 100, nwalkers = 100, burn-in = 10, thin = 1 | 2190.6 |
+| Original Paper| nsamples = 100, nwalkers = 100, burn-in and thin unknown | ~1 |
+| Reproduction | nsamples = 100, nwalkers = 100, burn-in = 10, thin = 1 | 2190.6 |
 
 _Table 3: Comparison in MCMC runtimes_
 
 Note that, indeed, the hardware used in the reproduction process is not as powerful as what was used in the original study (specific models shown in Table 1). Nevertheless, given the magnitude of the discrepancy, it is very unlikely that this was a main cause for it.
 
-In addition, when this issue was first noticed, the possibility that the added runtime ocurred due to misuse of the authors’ code during reproduction was, naturally, considered. To reduce the risk of such an error being responsible for the irreproducibility, the exisiting codebase was once more analyzed in order to find a example of how to construct, fit, and conduct inference with an MCMC model. Such an example was found in a method responsible for building from scratch and evaluating MCMC models and used as a comparison to correct possible mistakes. However, the re-implementation and the example implementation utilized the pipeline in the same manner. This agreement between the re-implementation and the authors’ own implementation make it very unlikely that an implementation error during reproduction is responsible for the issue at hand.
+In addition, when this issue was first noticed, the possibility that the added runtime ocurred due to misuse of the authors’ code during reproduction was, naturally, considered. To reduce the risk of such an error being responsible for the irreproducibility, the exisiting codebase was once more analyzed in order to find a example of how to construct, fit, and conduct inference with an MCMC model. Such an example was found in a method responsible for building from scratch and evaluating MCMC models and used as a comparison to correct possible mistakes. However, the re-implementation and the example implementation utilized the pipeline in the same manner. This agreement between the re-implementation and the authors’ own implementation make itg unlikely that an implementation error during reproduction is responsible for the issue at hand.
 
 ## Simplifying the Transformer using PyTorch:
 
