@@ -5,67 +5,100 @@
 |Remi Lejeune | R.J.Lejeune@student.tudelft.nl | 5040841 | Variant (Positional encoding) & Simplifying Transformer |
 | Marin Jaić | M.Jaic@student.tudelt.nl | 6075185 | Ablation study & adapting model to new dataset |
 | Patrik Kukić | P.Kukic@student.tudelft.nl | 6066559 | Ablation study & adapting model to new dataset |
-| António Costa Bernardes | acostabernarde@tudelft.nl | 5851904 | Reproducing paper results: inference LC-PFN & MCMC |
+| António Bernardes | A.P.CostaBernardes@student.tudelft.nl | 5851904 | Reproducing paper results: inference LC-PFN & MCMC |
 ## Introduction
 
 In the machine learning field, where computational requirements are fast increasing with the needs for more powerful predictive models, being able to predict a model’s training performance when given more resources would be of great benefit for training efficiency both time and cost-wise.
 
 The paper "Efficient Bayesian Learning Curve Extrapolation using Prior-Data Fitted Networks" [1] addresses this issue by innovating within the domain of learning curve extrapolation by employing a Bayesian approach tailored to handle the intrinsic uncertainties of predicting machine learning model performance over the training process. Traditional methods, while effective, often pose limitations due to their computational expense or restrictive assumptions on the data. This research offers an alternative by utilizing Prior-Data Fitted Networks (PFNs) for learning curve inference – dubbed Learning Curve Prior-Data Fitted Networks (LC-PFNs), which leverage transformer architectures to perform Bayesian inference efficiently and flexibly.
 
-Building on the work presented in [2], who introduced a parametric model for learning curve extrapolation using Markov Chain Monte Carlo (MCMC) methods, this paper advances the field by dramatically enhancing computational efficiency. Notably, LC-PFNs can deliver at leaset equally accurate extrapolations more than 10,000 times faster than traditional MCMC methods, providing a potent tool for applications like automated machine learning and hyperparameter optimization where quick, reliable forecasts can significantly accelerate decision-making processes. Figure 1, obtained from [1] compares the reported performance in terms of log-likelyhood vs. Inference runtime.
+Building on the work presented in [2], who introduced a parametric model for learning curve extrapolation using Markov Chain Monte Carlo (MCMC) methods, this paper advances the field by dramatically enhancing computational efficiency. Notably, LC-PFNs can deliver at leaset equally accurate extrapolations more than 10,000 times faster than traditional MCMC methods, providing a potent tool for applications like automated machine learning and hyperparameter optimization where quick, reliable forecasts can significantly accelerate decision-making processes. Figure 1, obtained from [1] compares the reported performance in terms of log-likelyhood vs. inference runtime.
 Naturally, as the authors point out, this increase in performance comes at the cost of a one-time significant overhead of traininf the LC-PFN.
-![Example Image](images/original_performance.png)
+<!-- ![Example Image](images/original_performance.png) -->
+<img src="images/original_performance.png" width="650" height="300">
+
+_Figure 1: Originially obtained performance [1]_
 
 In their methodology, the authors initially develop and test their proposed model using a set of informative priors (obtained from building upon Dohman uninformative priors) to sample learning curves that are used for training and inference. Subsequently, the LC-PFN model is rigorously tested with real-world data and evaluated for its effectiveness in predictive early stopping based on its forecasts. In almost all cases, the LC-PFN model matches or exceeds the accuracy of the MCMC model, while performing the inference step thousands of times faster.
 
-In this blog post, an initial reproduction of the obtained results will be attempted using the authors’ original code as faithfully as possible. Following the replication, the focus will shift to adapting the original codebase to leverage the tools provided by PyTorch, particularly the Transformer class. Notably, in [1] the authors develop a custom and quite convoluted implementation of the transformer model. By porting the model to utilize PyTorch’s built-in Transformer modules, the expectation is to streamline the architecture and potentially enhance computational efficiency and maintainability of the code. Finally, the original implementation will be put to further testing using an increased set of real-world data.
+In this blog post, an initial reproduction of the obtained results will be attempted using the authors’ original code as faithfully as possible. Following the replication, the focus will shift to adapting the original codebase to leverage the tools provided by PyTorch, particularly the Transformer class, since, notably, in [1] the authors develop a custom implementation of the transformer model. By porting the model to utilize PyTorch’s built-in Transformer modules, the expectation is to streamline the architecture and potentially enhance computational efficiency and maintainability of the code. Finally, the original implementation will be put to further testing using an increased set of real-world data.
 
 ## Reproducing the obtained results
+Related code can be found [here](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/notebooks/initial_reproduction.ipynb).
 
 The initial goal was to replicate the learning curve inference demonstrated by both the LC-PFN and the MCMC models using the authors' original code with minimal changes. Success was defined by the ability to recreate an image similar to Figure 2, obtained from the original paper [1], showing the inference from both models of two curves with different cutoffs at 10 and 20.
-![Example Image](images/original_inference.png)
+<!-- ![Example Image](images/original_inference.png) -->
+<img src="images/original_inference.png" width="400" height="250">
+
+_Figure 2: Learning curve inference example [1]_
 
 The hardware used in this section and the equivalent used in the original paper is listed in Table 1.
-| | LC-PFN Training and inference | MCMC fitting and inference |
+
+| | LC-PFN Experiments | MCMC Experiments|
 |--------------------|-------------------------------|-------------------------------|
 | Original paper | single RTX2080 GPU | single Intel(R) Xeon(R) Gold 6242 CPU |
 | Reproduction | Single T4 GPU | single Intel(R) Core(TM) i7-8550U CPU |
 
 _Table 1: Hardware used in the original paper [1] and in the reproduction_
 
+
+
 ### Inference with LC-PFN
 
-The first step was to obtain a trained LC-PFN model. To this end, the interface provided by the authors for trying such models was used.
+The first step was to obtain a trained LC-PFN model. To this end, the interface provided by the authors for traning such models was used.
 
-The model was set to handle sequences of length 100 and included an embedding size of 256 and 3 layers. This architecture was chosen to mimic that of the smaller model tested by the authors, thus testing if the least powerful model highlighted in the paper is indeed able to achieve satisfactory results. The model was trained with a batch size of 500 for 300 epochs (a total training time of slightly less than five hours compared to the total of around 8 hours mentioned in the paper for the largest model).
+The model was set to handle sequences of length 100 and included an embedding size of 256 and 3 layers. This architecture was chosen to mimic that of the smaller model tested by the authors, thus testing if the least powerful model highlighted in the paper is indeed able to achieve satisfactory results. The model was trained with 50k curves for 300 epochs (a total training time of slightly less than five hours compared to the total of around 8 hours mentioned in [1] for the largest model).
 
-After training the model, it was put to the test with two target curves shown with cutoffs 10 and 20 as previously mentioned. The target curves and the network’s predictions when fed 10 or 20 epochs of each curve are shown in Figure X. The result is, indeed, quite satisfactory and as such the reproduction of the LC-PFN pipeline from training to inference using the authors’ code is considered successful.
-![Example Image](images/obtained_inference.png)
+After training the model, it was put to the test with two target curves shown with cutoffs 10 and 20 as previously mentioned. The target curves and the network’s predictions when fed 10 or 20 epochs of each curve are shown in Figure 3.
+
+<img src="images/obtained_inference.png" width="500" height="300">
+
+_Figure 3: Reproduced learning curve inference example_
+
+
+For further analysis of the obtained model, named in the following experiments as "reproduction model", its performance was comapared to that of a model shared by the authors with a similar architecture to the best performing model reported in [1] (P3) with 12 layers and an embedding size of 512, refered in the experiments as "given model". To this end, the MSE loss of each model for multiple cutoff levels averaged over 20 different curves with a sequence length of 100 was evaluated and plotted in Figure 4. In addition, the average inference runtime of both models was reported and is shown in Table 2 alongside the architecture description of each model. 
+
+<img src="images/reproduction_vs_given_mse.png" width="500" height="300">
+
+_Figure 4: Reprodcition and given models MSE_
+
+
+| | Architecture | Average Runtime (s)|
+|--------------------|-------------------------------|-------------------------------|
+| Given Model | 12 layers, 512 embedding size | 0.1167 |
+| Reproduction Model | 3 layers, 256 embedding size | 0.01671 |
+
+_Table 2: Comparison of architecture and runtime between model created for reproduction and a given model created by the authors_
+
+An analysis of Figure 4 reveals that, the performance of the reproduction model is indeed comparable to that of the provided model, although not performing quite as well - an expected result given, for example, the differnece in size of the two models. This difference in size is also reflected in the average inference times shown in Table 2.
+
+Note that the weights for both the [reproduction model](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/reproduction_model.pt) and the [given model](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/pfn_EPOCH1000_EMSIZE512_NLAYERS12_NBUCKETS1000.pt) can be found in [this directory](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/trained_models/).
+
 
 ### Inference with MCMC
 
 Moving on to the reproduction of the inference capabilities of the MCMC model, again, the code provided by the author’s was analyzed in order to find the correct pipeline for using this model. Unlike in the case of the LC-PFN, however, there is no “training process” in the sense that the term used in deep learning. Instead, each model is obtained by fitting it to a portion (up to the cutoff) of the sequence to be predicted.
 
-The reproduction process, unlike that of the LC-PFN, was unsuccessful. This was due to the sheer amount of runtime required by the MCMC model. Of course, the main objective of the paper is to demonstrate that the prediction runtime of the LC-PFN is much faster than that of the MCMC model, however, the required runtime observed during reproduction was incomparably larger than that reported by the authors. Take as an example Table 2 which lists the runtimes reported by the authors as well as that observed in the reproduction, where the mentioned discrepancy is clearly visible.
+The reproduction process, unlike that of the LC-PFN, was unsuccessful. This was due to the sheer amount of runtime required by the MCMC model. Of course, the main objective of the paper is to demonstrate that the prediction runtime of the LC-PFN is much faster than that of the MCMC model, however, the required runtime observed during reproduction was incomparably larger than that reported by the authors. Take as an example Table 3 which lists the runtimes reported by the authors as well as that observed in the reproduction, where the mentioned discrepancy is clearly visible.
 | Source | Parameters | Avg. Time (seconds) |
 |---------------|----------------------------------------------|---------------------|
 | Original Paper| nsamples = 2000, nwalkers = 100, burn-in = 500, thin = 1 | 54.401 |
 | Original Paper| nsamples = 4000, nwalkers = 100, burn-in = 100, thin = 100 | 45.160 |
 | Original Paper| nsamples = 4000, nwalkers = 100, burn-in = 500, thin = 1 | 103.151 |
-| Original Paper| Nsamples = 100, nwalkers = 100, burn-in and thin unknown | ~1 |
-| Reproduction | Nsamples = 100, nwalkers = 100, burnin = 10, thin = 1 | 2190.6 |
+| Original Paper| nsamples = 100, nwalkers = 100, burn-in and thin unknown | ~1 |
+| Reproduction | nsamples = 100, nwalkers = 100, burn-in = 10, thin = 1 | 2190.6 |
 
-_Table 2: Comparison in MCMC runtimes_
+_Table 3: Comparison in MCMC runtimes_
 
-Note that, indeed, the hardware used in the reproduction process is not as powerful as what was used in the original study. Nevertheless, given the magnitude of the discrepancy, it is very unlikely that this was a main cause for it.
+Note that, indeed, the hardware used in the reproduction process is not as powerful as what was used in the original study (specific models shown in Table 1). Nevertheless, given the magnitude of the discrepancy, it is very unlikely that this was a main cause for it.
 
-In addition, when this issue was first noticed, the possibility that the added runtime ocurred due to misuse of the authors’ code was, naturally, considered. To reduce the risk of such an error being responsible for the irreproducibility, the exisiting codebase was once more analyzed in order to find a example of how to construct, fit, and conduct inference with an MCMC model. Such an example was found in a method responsible for building from scratch and evaluating MCMC models and used as a comparison to correct possible mistakes. However, the re-implementation and the example implementation utilized the pipeline in the same manner. This agreement between the re-implementation and the authors’ own implementation make it very unlikely that an implementation error during reproduction is responsible for the issue at hand.
+In addition, when this issue was first noticed, the possibility that the added runtime ocurred due to misuse of the authors’ code during reproduction was, naturally, considered. To reduce the risk of such an error being responsible for the irreproducibility, the exisiting codebase was once more analyzed in order to find a example of how to construct, fit, and conduct inference with an MCMC model. Such an example was found in a method responsible for building from scratch and evaluating MCMC models and used as a comparison to correct possible mistakes. However, the re-implementation and the example implementation utilized the pipeline in the same manner. This agreement between the re-implementation and the authors’ own implementation make itg unlikely that an implementation error during reproduction is responsible for the issue at hand.
 
 ## Simplifying the Transformer using PyTorch:
 
 The code used to build the transformer model presented by the paper [1] spans 16 different files totaling several thousands of lines. In this chapter we attempt to replicate their model by building a transformer model using Pytroch libraries. This would improve the readability of the code and remove the thousands of lines of code now made redundant due to the integration of PyTorch.
 
-We iterated through 4 different models as shown in Table 3. Each model was trained with 6400 curves in batches of 64, was made up of 4 layers and 8 multi-attention heads. The first was a transformer model trained with a model dimension of 128 and a feed forwards dimension of 512. Due to the first model’s poor performance, we lowered the dimensions of our second model. The idea behind this was that a simpler model might generalize better of the dataset. This did not improve the performance overall, indicating the problem to be more complex than simply overfitting.
+We iterated through 4 different models as shown in Table 4. Each model was trained with 6400 curves in batches of 64, was made up of 4 layers and 8 multi-attention heads. The first was a transformer model trained with a model dimension of 128 and a feed forwards dimension of 512. Due to the first model’s poor performance, we lowered the dimensions of our second model. The idea behind this was that a simpler model might generalize better of the dataset. This did not improve the performance overall, indicating the problem to be more complex than simply overfitting.
 
 Our third model consisted of the same parameters as our second, but with the removal of forced teaching in our training algorithm. Instead of using the true values of the curve as inputs to the model when making its prediction, we instead give it its predictions of the previous points. This allows the loss to accumulate and be reflected in the total loss used to update the model parameters. Instead of the error of the model being refreshed at every prediction step, the model is punished for multiple wrong predictions in the same direction. Removing forced teaching creates a bigger incentive for the full predicted curve to remain closer to the target curve. For our last model we replaced the positional encoding with our own variant. This is further explained in the next chapter.
 
@@ -74,15 +107,15 @@ Our third model consisted of the same parameters as our second, but with the rem
 | Mean               | **0.0002**     | 2.3589                        | 3.2686                        | 1.9210      | 3.4749                                                |
 | Standard Deviation | **8.0023e-05** | 0.3185                        | 0.5678                        | 0.2005      | 0.5448                                                |
 
-_Table 3: Loss (mean and standard deviation) for each model. Code to train the models can be found in the [training_models](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/training_models.ipynb) jupyter notebook._
+_Table 4: Loss (mean and standard deviation) for each model. Code to train the models can be found in the [training_models](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/training_models.ipynb) jupyter notebook._
 
-To compare the performance of our models and the paper’s model we measured the average loss of 10 predictions of 100 curves. The result of this can be seen in Table 3. The paper’s model (LCPFN) was shown to outperform all other models with a mean of 0.0002 and a standard deviation of 8.0023e-05. The small model without forced teaching was the best performing of our models with a mean of 1.9210 and standard deviation of 0.2005. The large model with forced teaching came third. The small model with forced teaching and the model with our variant positional encoding both had a similar result.
+To compare the performance of our models and the paper’s model we measured the average loss of 10 predictions of 100 curves. The result of this can be seen in Table 4. The paper’s model (LCPFN) was shown to outperform all other models with a mean of 0.0002 and a standard deviation of 8.0023e-05. The small model without forced teaching was the best performing of our models with a mean of 1.9210 and standard deviation of 0.2005. The large model with forced teaching came third. The small model with forced teaching and the model with our variant positional encoding both had a similar result.
 
 |                                                       ![Predicted_Curves](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/2197e5e4-74a4-416a-9078-45238f31b397)                                                        |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| _Figure 4:_ For 6 different target curves we plot the predicted curves of each of the 5 models. The models are given the first 15 points, after which they are tasked with predicting the following 85 points that make up the target curve. Code for testing the models and generating similar graphs can be found in the [testing](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/testing.ipynb) jupyter notebook. |
+| _Figure 5:_ For 6 different target curves we plot the predicted curves of each of the 5 models. The models are given the first 15 points, after which they are tasked with predicting the following 85 points that make up the target curve. Code for testing the models and generating similar graphs can be found in the [testing](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/testing.ipynb) jupyter notebook. |
 
-Several trends can be observed when plotting the predictions of the models against target curves (see figure 4). More examples of plots can be found in our repository under ‘/graphs’. Firstly, the large model always predicts higher values than the true target curve and is always increasing, except when the generated target curve is already approaching the max value 1. Secondly, the small model with forced teaching appears to always tend towards a value of around 4.5. A possible explanation is that 0.45 is the mean of the training dataset and the model is attempting to minimize total loss by reaching that value. Lastly, we notice a collocation between the shape of the curves of models with forced teaching and the shape of the curve for models without. The models with forced teaching are able to achieve a smoother curve that straightens out, whereas the models with forced teaching taper off in either direction. As mentioned above, this is because forced teaching strongly incentivises the sum of point predictions not to deviate too hard in one direction.
+Several trends can be observed when plotting the predictions of the models against target curves (see Figure 5). More examples of plots can be found in our repository under ‘/graphs’. Firstly, the large model always predicts higher values than the true target curve and is always increasing, except when the generated target curve is already approaching the max value 1. Secondly, the small model with forced teaching appears to always tend towards a value of around 4.5. A possible explanation is that 0.45 is the mean of the training dataset and the model is attempting to minimize total loss by reaching that value. Lastly, we notice a collocation between the shape of the curves of models with forced teaching and the shape of the curve for models without. The models with forced teaching are able to achieve a smoother curve that straightens out, whereas the models with forced teaching taper off in either direction. As mentioned above, this is because forced teaching strongly incentivises the sum of point predictions not to deviate too hard in one direction.
 
 ## Positional Encoding:
 
@@ -97,11 +130,11 @@ $$P(k,2i + 1) =  cos(\frac{k}{n^{2i/d}})$$
 - n = [0,99], it is the length of the input curve
 - i indexes the columns of the encoding matrix for both sin and cos columns. 0 <= i <= d/2
 
-Figure 5 shows an example computation of the positional encoding matrix.
+Figure 6 shows an example computation of the positional encoding matrix.
 
 |          ![pos_enc](https://github.com/Remi-Lejeune/deep-learning-project/assets/72941971/70a6e302-4e3c-4022-af1f-aa2f13c2f850)           |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| _Figure 5:_ Encoding of 4 point sequence using standard (sin-cos) positional encoding where d = 4 and n = 4. Each row represents a point. |
+| _Figure 6:_ Encoding of 4 point sequence using standard (sin-cos) positional encoding where d = 4 and n = 4. Each row represents a point. |
 
 The second positional encoding used by the paper is learned positional encoding. Instead of using a fixed mathematical model and equations, the positional encodings are learned with the model parameters during training. This allows for a more tailored embedding as it can be modeled to specific characteristics of the data.
 
@@ -109,7 +142,7 @@ The third and final encoding they use is paired scrambled positional encoding. T
 
 For our code variant we decided to implement a custom encoding. We created a positional encoding module based on the euclidean distance of the points position (x-value) to the start of the curve.  This is based on the assumption that points have a stronger effect on the points closer to them in the sequence. 
 
-We went on to compare our euclidean positional encoding with the standard sin-cos positional encoding using our small (no forced teaching) model. As can be seen in the last two columns of table 3, standard positional encoding (Small model) has a mean loss of 1.921 with a standard deviation of 0.2, thus outperforms our euclidean encoding who's mean loss is 3.475 with a standard deviation of 0.54. One possible explanation for this is that euclidean encoding does not normalise its values depending on the sequence length. As standard encoding uses sin and cos functions, all values are bound by -1 and 1 no matter the length of the input. However, for euclidean distance, the upper bound will increase as the number of points increase. Normalising the euclidean distance values to be between 0 and 1 might help, however this would create a situation where the same point would normalise into different values based on the input size. Another interesting trend that can be seen in figure 4 is that the curve predicted with Euclidean distance encoding is always higher than with standard encoding.
+We went on to compare our euclidean positional encoding with the standard sin-cos positional encoding using our small (no forced teaching) model. As can be seen in the last two columns of Table 4, standard positional encoding (Small model) has a mean loss of 1.921 with a standard deviation of 0.2, thus outperforms our euclidean encoding who's mean loss is 3.475 with a standard deviation of 0.54. One possible explanation for this is that euclidean encoding does not normalise its values depending on the sequence length. As standard encoding uses sin and cos functions, all values are bound by -1 and 1 no matter the length of the input. However, for euclidean distance, the upper bound will increase as the number of points increase. Normalising the euclidean distance values to be between 0 and 1 might help, however this would create a situation where the same point would normalise into different values based on the input size. Another interesting trend that can be seen in figure 4 is that the curve predicted with Euclidean distance encoding is always higher than with standard encoding.
 
 ## Testing their model on new data
 
@@ -124,14 +157,14 @@ For the implementation, the goal was to generate sensible plots and measure perf
 
 |          ![lcdb](https://raw.githubusercontent.com/Remi-Lejeune/deep-learning-project/86883a79833351a6adb3e6f42e1e2b291ac40bff/notebooks/grid.svg)           |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| _Figure 5:_ LCPFN with different neural network sizes, for one of the chosen training curves. Blue points are observations, green points are the actual values, red points are predicted accuracies.|
+| _Figure 7:_ LCPFN with different neural network sizes, for one of the chosen training curves. Blue points are observations, green points are the actual values, red points are predicted accuracies.|
 
 Additionaly, the model was adjusted and trained with different numbers of heads and linear layers. All the combinations with the encoding sizes of 256 and 128 coupled with layers of size 12, 10 and 8 were trained on 10 epochs. Similar to previously mentioned, they showed good performance during training, but upon visualization look very lackluster, indicating a flaw in the implementation. 
 
 
 ## Limitations
 
-One of the main limitation of our project is the lack of computational resources. The results in the paper were produced with models traind on 100k to 10M curves. The models trained in the 'simplyfing to pytorch' chapter were trained on 6.4k curves. Training the models with similar resources would provide a fairer comparison with the paper's model.
+One of the main limitation of our project is the lack of computational resources. The results in the paper were produced with models traind on 100k to 10M curves. The models trained in the 'simplyfing to pytorch' chapter were trained on 6.4k curves, or 50k curves in the initial reproduction of the results. Training the models with similar resources would provide a fairer comparison with the paper's model.
 In addition, the lcpfn framework has a very long and convoluted pipeline, is very hard coded, many of its functions were never tested or used and were left there as remenants and it does not allow for simple model defining outside of calling the training loop. It required a lot of backwards engineering and overhauling to adjust it to some of the desired purposes. Note that the original work was not meant to be used in this fashion, still, it posed a challenge.
 
 ## Conclusion and Future work
