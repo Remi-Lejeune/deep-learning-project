@@ -1,1 +1,0 @@
-../../../../python/lcdb/computelc.py
