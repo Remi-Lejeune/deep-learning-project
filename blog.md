@@ -45,7 +45,7 @@ _Table 1: Hardware used in the original paper [1] and in the reproduction_
 
 ### Inference with LC-PFN
 
-The first step was to obtain a trained LC-PFN model. To this end, the interface provided by the authors for traning such models was used.
+The first step was to obtain a trained LC-PFN model. To this end, the interface provided by the authors for training such models was used.
 
 The model was set to handle sequences of length 100 and included an embedding size of 256 and 3 layers. This architecture was chosen to mimic that of the smaller model tested by the authors, thus testing if the least powerful model highlighted in the paper is indeed able to achieve satisfactory results. The model was trained with 50k curves for 300 epochs (a total training time of slightly less than five hours compared to the total of around 8 hours mentioned in [1] for the largest model).
 
