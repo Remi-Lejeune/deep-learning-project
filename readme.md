@@ -7,7 +7,10 @@ Where to find our code contributions:
 - The Transformer models and training loop code described in sections *Simplifying the Transformer using PyTorch* and *Positional Encoding*  can be found in the [training_models](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/training_models.ipynb) jupyter notebook.
 - The code that produced the results (table  and graph) for sections *Simplifying the Transformer using PyTorch* and *Positional Encoding* can be found in  the [testing](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/lcpfn/notebooks/testing.ipynb) jupyter notebook.
 - The code related to the results reproduction using the original code framework can be found in the [initial_reproduction](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/notebooks/initial_reproduction.ipynb) jupyter notebook.
-
+- The code related to processing the LCDB data can be found in the [explore](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/wreckin_everything/notebooks/explore.ipynb) jupyter notebook.
+- The code related to training the LCPFN models with the LCDB data can be found in the [TrainingNewData](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/wreckin_everything/notebooks/TrainingNewData.ipynb) jupyter notebook.
+- The code related to generating the plots of the newly LCPFN models trained on LCDB data can be found in the [inference](https://github.com/Remi-Lejeune/deep-learning-project/blob/main/wreckin_everything/notebooks/inference.ipynb) jupyter notebook.
+- Many other changes to enable the training of LCPFN-based models using the LCDB data have been made in the (wreckin_everything/lcpfn)[https://github.com/Remi-Lejeune/deep-learning-project/tree/main/wreckin_everything/lcpfn] folder.
 ### Installation
 
 To set up the Python environment and install the necessary dependencies, follow these steps:
